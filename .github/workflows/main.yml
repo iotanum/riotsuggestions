@@ -15,3 +15,9 @@ jobs:
 
       - name: Build and run latest code
         run: docker-compose up --build -d
+
+      - name: Remove old unused images
+        run: docker image prune -f
+
+      - name: Remove old unused containers
+        run: docker container prune -f
