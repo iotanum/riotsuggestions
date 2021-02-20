@@ -6,6 +6,8 @@ on:
 
   workflow_dispatch:
 
+environment: staging_environment
+
 jobs:
   build:
     runs-on: self-hosted
@@ -14,6 +16,9 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Build and run latest code
+        env:
+          DISCORD_API: ${{ secrets.DISCORD_API }}
+          COMMAND_PREFIX: ${{ secrets.COMMAND_PREFIX }}
         run: docker-compose up --build -d
 
       - name: Remove old unused images
