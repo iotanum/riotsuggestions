@@ -108,17 +108,11 @@ class Commands(commands.Cog):
     async def give_ip(self, ctx):
         ingas = 398128290042347526
 
-        print("please work")
-        if await self.bot.is_owner(ctx.message.author):
+        if ctx.message.author.id == ingas or await self.bot.is_owner(ctx.message.author):
             ip = get('https://api.ipify.org').text
             await ctx.message.author.send(f"{ip}")
         else:
             await ctx.send("?")
-
-    @commands.command(brief="Suggest most suited picks for you!")
-    async def test(self, ctx, *, args):
-        print(":D")
-        await ctx.send("?")
 
     @commands.Cog.listener()
     async def on_message(self, message):
