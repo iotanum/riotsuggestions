@@ -102,9 +102,7 @@ class Commands(commands.Cog):
         await ctx.send(embed=embed)
 
     async def replies(self):
-        print("please wowkwkwkwwkwk")
-        return ["bybys"]
-        # return ["is k", "yo np", "k", "np"]
+        return ["is k", "yo np", "k", "np"]
 
     @commands.command(name='ip')
     async def give_ip(self, ctx):

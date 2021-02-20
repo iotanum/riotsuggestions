@@ -11,6 +11,7 @@ from discord.ext import commands
 DISCORD_API_KEY = os.getenv("DISCORD_API")
 
 bot = commands.Bot(command_prefix=os.getenv("COMMAND_PREFIX"))
+print(f"Your command prefix is {os.getenv('COMMAND_PREFIX')}")
 
 initial_extensions = ['cogs.command_error_handler',
                       'cogs.commands']
