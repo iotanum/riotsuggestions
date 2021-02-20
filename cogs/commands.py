@@ -106,11 +106,13 @@ class Commands(commands.Cog):
 
     @commands.command(name='ip')
     async def give_ip(self, ctx):
-        qonquest_id = 106747781552562176
+        ingas = 398128290042347526
 
-        if ctx.message.author.id == qonquest_id or await self.bot.is_owner(ctx.message.author):
+        if await self.bot.is_owner(ctx.message.author):
             ip = get('https://api.ipify.org').text
             await ctx.message.author.send(f"{ip}")
+        else:
+            await ctx.send("?")
 
     @commands.Cog.listener()
     async def on_message(self, message):
