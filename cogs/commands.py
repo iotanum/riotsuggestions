@@ -102,7 +102,8 @@ class Commands(commands.Cog):
         await ctx.send(embed=embed)
 
     async def replies(self):
-        return ["is k", "yo np", "k", "np"]
+        return ["bybys"]
+        # return ["is k", "yo np", "k", "np"]
 
     @commands.command(name='ip')
     async def give_ip(self, ctx):
@@ -121,7 +122,7 @@ class Commands(commands.Cog):
             return
 
         message_content = message.content.lower()
-        if 'thanks' in message_content and 'tyler' or 'ignas' in message_content:
+        if 'thanks' in message_content and 'tyler' in message_content:
             await message.channel.send(random.choice(await self.replies()))
 
 
