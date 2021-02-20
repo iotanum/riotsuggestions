@@ -117,6 +117,7 @@ class Commands(commands.Cog):
 
     @commands.command(brief="Suggest most suited picks for you!")
     async def test(self, ctx, *, args):
+        print(":D")
         await ctx.send("?")
 
     @commands.Cog.listener()
