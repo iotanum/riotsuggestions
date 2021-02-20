@@ -115,6 +115,10 @@ class Commands(commands.Cog):
         else:
             await ctx.send("?")
 
+    @commands.command(brief="Suggest most suited picks for you!")
+    async def test(self, ctx, *, args):
+        await ctx.send("?")
+
     @commands.Cog.listener()
     async def on_message(self, message):
         if message.author == self.bot.user:
