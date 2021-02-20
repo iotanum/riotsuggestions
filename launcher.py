@@ -3,7 +3,10 @@ import os
 from dotenv import load_dotenv
 from discord.ext import commands
 
-load_dotenv(dotenv_path="secrets.env")
+try:
+    load_dotenv(dotenv_path="secrets.env")
+except:
+    pass
 
 DISCORD_API_KEY = os.getenv("discord_api")
 
