@@ -3,14 +3,14 @@ import os
 from dotenv import load_dotenv
 from discord.ext import commands
 
-try:
-    load_dotenv(dotenv_path="secrets.env")
-except:
-    pass
+# try:
+#     load_dotenv(dotenv_path="secrets.env")
+# except:
+#     pass
 
-DISCORD_API_KEY = os.getenv("discord_api")
+DISCORD_API_KEY = os.getenv("DISCORD_API")
 
-bot = commands.Bot(command_prefix=os.getenv("command_prefix"))
+bot = commands.Bot(command_prefix=os.getenv("COMMAND_PREFIX"))
 
 initial_extensions = ['cogs.command_error_handler',
                       'cogs.commands']

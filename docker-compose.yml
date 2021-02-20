@@ -1,0 +1,10 @@
+version: '2'
+services:
+  suggestionsbot:
+    environment:
+      - DISCORD_API=${DISCORD_API}
+      - COMMAND_PREIFX=${COMMAND_PREFIX}
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: suggestionsbot
