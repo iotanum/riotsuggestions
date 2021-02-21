@@ -134,7 +134,7 @@ class Commands(commands.Cog):
         channel_id = ctx.message.channel.id
         registry_params = [hostname, channel_id, user_id]
 
-        with open(self.bot_registry_dir, 'w') as file:
+        with open(self.bot_registry_dir, 'a') as file:
             file.write(",".join(str(param) for param in registry_params))
             file.close()
 
