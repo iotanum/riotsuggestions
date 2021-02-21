@@ -110,7 +110,8 @@ class Commands(commands.Cog):
 
     async def update_registry(self):
         if not os.path.exists(self.bot_registry_dir):
-            with open(self.bot_registry_dir, 'w'): pass
+            print("bla")
+            open(self.bot_registry_dir, 'w').close()
 
         with open(self.bot_registry_dir, 'r') as file:
             registry = file.readlines()
