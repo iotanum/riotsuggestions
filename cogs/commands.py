@@ -126,8 +126,8 @@ class Commands(commands.Cog):
 
                 if len(registry_params) == 3:
                     self.registry[registry_params[2][:-2]] = {}
-                    self.registry[registry_params[2]]['channel_id'] = registry_params[1]
-                    self.registry[registry_params[2]]['hostname'] = registry_params[0]
+                    self.registry[registry_params[2][:-2]]['channel_id'] = registry_params[1]
+                    self.registry[registry_params[2][:-2]]['hostname'] = registry_params[0]
 
             file.close()
 
