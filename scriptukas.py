@@ -135,16 +135,16 @@ def copy_to_clipboard(my_team, enemy_team):
     command_text = f'!pick ({my_team_picks} : {their_team_picks})'
     subprocess.Popen(f'echo {command_text} | clip', shell=True)
 
-    post_request(my_team, enemy_team)
+    post_request(my_team_picks, their_team_picks)
 
 
 def post_request(my_team, enemy_team):
-    match = {}
-    match['my_team'] = [x for x in my_team.values()]
-    match['enemy_team'] = [x for x in enemy_team.values()]
+    match = dict()
+    match['command'] = f"{my_team} : {enemy_team}"
     match['hostname'] = socket.gethostname()
 
-    r = requests.post("http://localhost:8090/get", data=json.dumps(match))
+    r = requests.post("http://212.24.110.117:8090/get", data=json.dumps(match))
+    # r = requests.post("http://localhost:8090/get", data=json.dumps(match))
 
 
 if __name__ == '__main__':
