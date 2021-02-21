@@ -6,4 +6,4 @@ routes = web.RouteTableDef()
 
 @routes.get('/get_picks')
 async def response(request):
-    return web.Response(text="Hello, world")
+    return web.Response(text="Goodbye, world")
