@@ -113,7 +113,7 @@ class Commands(commands.Cog):
             with open(self.bot_registry_dir, 'a+'): pass
 
         with open(self.bot_registry_dir, 'r') as file:
-            registry = file.read()
+            registry = file.readlines()
 
             if registry == '':
                 self.registry = {}
