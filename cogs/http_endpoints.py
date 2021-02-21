@@ -22,7 +22,9 @@ class HTTPServer(commands.Cog):
                 if r_body['hostname'] in params['hostname']:
                     client_tag = f'<@{client_id}>'
                     channel_id = int(params['channel_id'])
-                    await self.bot.get_channel(channel_id).send(f"{client_tag}\n{r_body}")
+
+                    embed = await self.bot.get_cog("Commands").format_embed(r_body['command'])
+                    await self.bot.get_channel(channel_id).send(embed=embed)
 
         async def get_handler(request):
             return web.Response(text=f"{self.bot.user.name}")

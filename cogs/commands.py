@@ -22,7 +22,6 @@ class Commands(commands.Cog):
         my_team = [int(x) for x in message[0].split(" ")]
         enemy_team = [int(x) for x in message[1].split(" ")]
 
-        print(my_team, enemy_team)
         return my_team, enemy_team
 
     async def format_final_dictionary_for_request(self, roles, my_team=True):
@@ -46,7 +45,7 @@ class Commands(commands.Cog):
         return {**my_roles, **enemy_roles}
 
     async def do_request(self, message):
-        url = "http://88.222.156.52:8080/matchup/whatDoIPlay"
+        url = "http://212.24.110.117:8080/matchup/whatDoIPlay"
 
         try:
             req = requests.post(url, data=message)
@@ -55,12 +54,11 @@ class Commands(commands.Cog):
         except requests.exceptions.ConnectionError:
             return []
 
-    @commands.command(brief="Suggest most suited picks for you!")
-    async def pick(self, ctx, *, args):
+    async def format_embed(self, args):
         final_request_form = await self.format_request_form(args)
-        print(final_request_form)
+        print("Final request:". final_request_form)
         suggestion_response = await self.do_request(final_request_form)
-        print(suggestion_response, "\n")
+        print("Response from backend:", suggestion_response, "\n")
 
         for key, value in final_request_form.items():
             if value == 0:
@@ -102,7 +100,12 @@ class Commands(commands.Cog):
         embed.set_footer(text="REMEMBER! Your team (left side) must be sorted!\n"
                               "TOP, JUNGLE, MIDDLE, BOTTOM, UTILITY")
 
-        print(final_request_form)
+        return embed
+
+    @commands.command(brief="Suggest most suited picks for you!")
+    async def pick(self, ctx, *, args):
+        embed = await self.format_embed(args)
+
         await ctx.send(embed=embed)
 
     async def replies(self):
@@ -139,7 +142,6 @@ class Commands(commands.Cog):
         param_string = f"{param_string}\n"
 
         if user_id not in self.registry:
-            print("bla", self.registry, user_id)
             with open(self.bot_registry_dir, 'a') as file:
                 file.write(param_string)
                 file.close()
@@ -149,7 +151,6 @@ class Commands(commands.Cog):
                 file.seek(0)
                 for line in d:
                     if user_id not in line:
-                        print("written")
                         file.write(line)
 
                 file.truncate()
