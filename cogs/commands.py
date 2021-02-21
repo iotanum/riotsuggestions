@@ -56,7 +56,7 @@ class Commands(commands.Cog):
 
     async def format_embed(self, args):
         final_request_form = await self.format_request_form(args)
-        print("Final request:". final_request_form)
+        print("Final request:", final_request_form)
         suggestion_response = await self.do_request(final_request_form)
         print("Response from backend:", suggestion_response, "\n")
 
