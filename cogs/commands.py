@@ -123,9 +123,11 @@ class Commands(commands.Cog):
             for _ in registry:
                 # In order of registry_params variable above
                 registry_params = _.split(',')
-                self.registry[registry_params[2]] = {}
-                self.registry[registry_params[2]]['channel_id'] = registry_params[1]
-                self.registry[registry_params[2]]['hostname'] = registry_params[0]
+
+                if len(registry_params) > 0:
+                    self.registry[registry_params[2]] = {}
+                    self.registry[registry_params[2]]['channel_id'] = registry_params[1]
+                    self.registry[registry_params[2]]['hostname'] = registry_params[0]
 
             file.close()
 
