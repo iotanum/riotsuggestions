@@ -136,9 +136,10 @@ class Commands(commands.Cog):
         channel_id = ctx.message.channel.id
         registry_params = [hostname, channel_id, user_id]
 
-        if user_id not in self.registry.keys():
+        if user_id not in self.registry:
             with open(self.bot_registry_dir, 'a') as file:
-                file.writelines(",".join(str(param) for param in registry_params) + "\n")
+                file.write(",".join(str(param) for param in registry_params))
+                file.write("\n")
                 file.close()
 
         # always call update after mutating
