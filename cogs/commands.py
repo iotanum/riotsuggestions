@@ -54,11 +54,13 @@ class Commands(commands.Cog):
         except requests.exceptions.ConnectionError:
             return []
 
-    async def format_embed(self, args):
+    async def format_embed(self, args, tag=None):
         final_request_form = await self.format_request_form(args)
         print("Final request:", final_request_form)
         suggestion_response = await self.do_request(final_request_form)
         print("Response from backend:", suggestion_response, "\n")
+
+        tag = "" if tag is None else tag
 
         for key, value in final_request_form.items():
             if value == 0:
@@ -72,7 +74,7 @@ class Commands(commands.Cog):
             pass
 
         embed = discord.Embed(title=f"What should you play in *{lane_for_suggestion}*, huh?",
-                              description=f"👏 Went 👏 through 👏 **{suggestion_response['totalRecords']}** 👏 matches 👏",
+                              description=f"👏 Went 👏 through 👏 **{suggestion_response['totalRecords']}** 👏 matches 👏 {tag}",
                               color=0xd62424)
 
         if len(suggestion_response['matchups']) == 0:
