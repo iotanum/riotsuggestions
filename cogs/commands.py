@@ -120,11 +120,11 @@ class Commands(commands.Cog):
                 return
 
             for _ in registry:
-                # In order of registry_params
+                # In order of registry_params variable above
                 registry_params = _.split(',')
-                self.registry[registry_params[0]] = {}
-                self.registry[registry_params[0]]['channel_id'] = registry_params[1]
-                self.registry[registry_params[0]]['user_id'] = registry_params[2]
+                self.registry[registry_params[2]] = {}
+                self.registry[registry_params[2]]['channel_id'] = registry_params[1]
+                self.registry[registry_params[2]]['hostname'] = registry_params[0]
 
     async def add_to_registry(self, ctx=None, hostname=None):
         user_id = ctx.message.author.id
@@ -155,7 +155,6 @@ class Commands(commands.Cog):
         if added:
             await ctx.message.add_reaction("\U00002705")
 
-    @commands.is_owner()
     @commands.command()
     async def get_registry(self, ctx):
         await ctx.send(f"```\n {self.registry} \n```")
