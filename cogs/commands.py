@@ -139,7 +139,7 @@ class Commands(commands.Cog):
         if user_id not in self.registry:
             with open(self.bot_registry_dir, 'a') as file:
                 file.write(",".join(str(param) for param in registry_params))
-                file.write("\n")
+                file.writelines("\n")
                 file.close()
 
         # always call update after mutating
