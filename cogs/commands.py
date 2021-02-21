@@ -127,6 +127,8 @@ class Commands(commands.Cog):
                 self.registry[registry_params[2]]['channel_id'] = registry_params[1]
                 self.registry[registry_params[2]]['hostname'] = registry_params[0]
 
+            file.close()
+
     async def add_to_registry(self, ctx=None, hostname=None):
         user_id = ctx.message.author.id
         channel_id = ctx.message.channel.id
@@ -134,6 +136,7 @@ class Commands(commands.Cog):
 
         with open(self.bot_registry_dir, 'w') as file:
             file.write(",".join(str(param) for param in registry_params))
+            file.close()
 
         # always call update after mutating
         await self.update_registry()
