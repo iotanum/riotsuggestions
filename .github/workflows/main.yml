@@ -18,6 +18,7 @@ jobs:
         env:
           DISCORD_API: ${{ secrets.DISCORD_API }}
           COMMAND_PREFIX: ${{ secrets.COMMAND_PREFIX }}
+          HTTP_SERVER_PORT: ${{ secrets.HTTP_SERVER_PORT }}
         run: docker-compose up --build -d
 
       - name: Remove old unused images
