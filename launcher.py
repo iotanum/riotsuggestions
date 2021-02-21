@@ -33,6 +33,7 @@ async def run_http_server():
 
 @bot.event
 async def on_ready():
+    await bot.get_cog("Commands").update_registry()
     print(f"Running: '{bot.user.name}', prefix '{os.getenv('COMMAND_PREFIX')}'")
 
 

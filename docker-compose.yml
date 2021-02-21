@@ -10,4 +10,11 @@ services:
       - HTTP_SERVER_PORT=${HTTP_SERVER_PORT}
     ports:
       - "${HTTP_SERVER_PORT}:${HTTP_SERVER_PORT}"
+    volumes:
+      - type: bind
+        source: bot_registry
+        target: /data/bot_registry
     image: suggestionsbot
+
+volumes:
+  bot_registry:

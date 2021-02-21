@@ -6,11 +6,14 @@ from .helpers.map_id_to_name import map_to_name
 import requests
 from requests import get
 import random
+import os
 
 
 class Commands(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        self.bot_registry_dir = 'data/bot_registry/registry'
+        self.registry = {}
 
     async def format_message_to_champ_list(self, message):
         message = message.strip("()")
@@ -105,6 +108,35 @@ class Commands(commands.Cog):
     async def replies(self):
         return ["is k", "yo np", "k", "np"]
 
+    async def update_registry(self):
+        if not os.path.exists(self.bot_registry_dir):
+            with open('channels.txt', 'w'): pass
+
+        with open(self.bot_registry_dir, 'r') as file:
+            registry = file.read()
+
+            if registry == '':
+                self.registry = {}
+                return
+
+            for _ in registry:
+                # In order of registry_params
+                registry_params = _.split(',')
+                self.registry[registry_params[0]]['channel_id'] = registry_params[1]
+                self.registry[registry_params[0]]['user_id'] = registry_params[2]
+
+    async def add_to_registry(self, ctx=None, hostname=None):
+        user_id = ctx.message.author.id
+        channel_id = ctx.message.channel.id
+        registry_params = [hostname, channel_id, user_id]
+
+        with open(self.bot_registry_dir, 'w') as file:
+            file.write(",".join(str(param) for param in registry_params))
+
+        await self.update_registry()
+
+        return True
+
     @commands.command(name='ip')
     async def give_ip(self, ctx):
         ingas = 398128290042347526
@@ -114,6 +146,18 @@ class Commands(commands.Cog):
             await ctx.message.author.send(f"{ip}")
         else:
             await ctx.send("?")
+
+    @commands.command()
+    async def add(self, ctx, hostname):
+        added = await self.add_to_registry(ctx, hostname)
+
+        if added:
+            await ctx.message.add_reaction("\U00002705")
+
+    @commands.is_owner()
+    @commands.command()
+    async def get_registry(self, ctx):
+        await ctx.send(f"```\n {self.registry} \n```")
 
     @commands.Cog.listener()
     async def on_message(self, message):
