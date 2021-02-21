@@ -110,7 +110,6 @@ class Commands(commands.Cog):
 
     async def update_registry(self):
         if not os.path.exists(self.bot_registry_dir):
-            print("bla")
             open(self.bot_registry_dir, 'w').close()
 
         with open(self.bot_registry_dir, 'r') as file:
@@ -123,23 +122,38 @@ class Commands(commands.Cog):
             for _ in registry:
                 # In order of registry_params variable above
                 registry_params = _.split(',')
+                registry_params = [param.replace("\n", '') for param in registry_params]
 
                 if len(registry_params) == 3:
-                    self.registry[registry_params[2][:-2]] = {}
-                    self.registry[registry_params[2][:-2]]['channel_id'] = registry_params[1]
-                    self.registry[registry_params[2][:-2]]['hostname'] = registry_params[0]
+                    self.registry[registry_params[0]] = {}
+                    self.registry[registry_params[0]]['channel_id'] = registry_params[2]
+                    self.registry[registry_params[0]]['hostname'] = registry_params[1]
 
             file.close()
 
     async def add_to_registry(self, ctx=None, hostname=None):
-        user_id = ctx.message.author.id
+        user_id = str(ctx.message.author.id)
         channel_id = ctx.message.channel.id
-        registry_params = [hostname, channel_id, user_id]
+        registry_params = [user_id, hostname, channel_id]
+        param_string = ",".join(str(param) for param in registry_params)
+        param_string = f"{param_string}\n"
 
         if user_id not in self.registry:
+            print("bla", self.registry, user_id)
             with open(self.bot_registry_dir, 'a') as file:
-                file.write(",".join(str(param) for param in registry_params))
-                file.writelines("\n")
+                file.write(param_string)
+                file.close()
+        else:
+            with open(self.bot_registry_dir, 'r+') as file:
+                d = file.readlines()
+                file.seek(0)
+                for line in d:
+                    if user_id not in line:
+                        print("written")
+                        file.write(line)
+
+                file.truncate()
+                file.write(param_string)
                 file.close()
 
         # always call update after mutating
