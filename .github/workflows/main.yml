@@ -14,7 +14,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Create volume mount directory
+        run: mkdir -p /data/bot_registry
+
       - name: Build and run latest code
+        id: docker_build
         env:
           DISCORD_API: ${{ secrets.DISCORD_API }}
           COMMAND_PREFIX: ${{ secrets.COMMAND_PREFIX }}
@@ -22,7 +26,9 @@ jobs:
         run: docker-compose up --build -d
 
       - name: Remove old unused images
+        if: steps.docker_build.outcome == 'success'
         run: docker image prune -f
 
       - name: Remove old unused containers
+        if: steps.docker_build.outcome == 'success'
         run: docker container prune -f
