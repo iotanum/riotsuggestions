@@ -6,8 +6,9 @@ import sys
 import urllib.error
 import subprocess
 from urllib.request import Request, urlopen
-from urllib import parse
+import socket
 
+import requests
 
 def find_riot_games_path():
     directories = ["C:/", "D:/"]
@@ -138,9 +139,12 @@ def copy_to_clipboard(my_team, enemy_team):
 
 
 def post_request(my_team, enemy_team):
-    data = parse.urlencode({**my_team, **enemy_team}).encode()
-    req = Request("http://localhost:8090/get", data=data)
-    resp = urlopen(req)
+    match = {}
+    match['my_team'] = [x for x in my_team.values()]
+    match['enemy_team'] = [x for x in enemy_team.values()]
+    match['hostname'] = socket.gethostname()
+
+    r = requests.post("http://localhost:8090/get", data=json.dumps(match))
 
 
 if __name__ == '__main__':
