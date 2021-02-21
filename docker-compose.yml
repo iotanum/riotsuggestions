@@ -9,5 +9,5 @@ services:
       - COMMAND_PREFIX=${COMMAND_PREFIX}
       - HTTP_SERVER_PORT=${HTTP_SERVER_PORT}
     ports:
-      - ${HTTP_SERVER_PORT}:${HTTP_SERVER_PORT}
+      - "${HTTP_SERVER_PORT}:${HTTP_SERVER_PORT}"
     image: suggestionsbot
