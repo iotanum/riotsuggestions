@@ -2,7 +2,7 @@ import requests
 
 
 def pull_data():
-    r = requests.get("https://ddragon.leagueoflegends.com/cdn/10.21.1/data/en_US/champion.json")
+    r = requests.get("https://ddragon.leagueoflegends.com/cdn/11.4.1/data/en_US/champion.json")
     j = r.json()
 
     return j
