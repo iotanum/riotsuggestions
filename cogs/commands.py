@@ -7,6 +7,7 @@ import requests
 from requests import get
 import random
 
+
 class Commands(commands.Cog):
     def __init__(self, bot):
         self.bot = bot

@@ -3,3 +3,4 @@ secrets.env
 dist/
 venv/
 test.py
+__pycache__/
