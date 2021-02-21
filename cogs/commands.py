@@ -12,7 +12,7 @@ import os
 class Commands(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.bot_registry_dir = 'data/bot_registry/registry'
+        self.bot_registry_dir = '/data/bot_registry/registry'
         self.registry = {}
 
     async def format_message_to_champ_list(self, message):
