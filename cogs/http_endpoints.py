@@ -4,6 +4,7 @@ import aiohttp
 from aiohttp import web
 
 import os
+import json
 
 
 HTTP_SERVER_PORT = os.getenv("HTTP_SERVER_PORT")
@@ -14,15 +15,25 @@ class HTTPServer(commands.Cog):
         self.bot = bot
 
     async def http_server(self):
+        async def invoke_bot_command(r_body):
+            registry = self.bot.get_cog("Commands").registry
+
+            for client_id, params in registry.items():
+                if r_body['hostname'] in params['hostname']:
+                    client_tag = f'<@{client_id}>'
+                    channel_id = int(params['channel_id'])
+                    await self.bot.get_channel(channel_id).send(f"{client_tag}\n{r_body}")
+
         async def get_handler(request):
             return web.Response(text=f"{self.bot.user.name}")
 
         async def post_handler(request):
-            body = await request.text()
-            return web.Response(text=body)
+            body = json.loads(await request.text())
+            await invoke_bot_command(body)
+            return web.Response(status=200)
 
         app = web.Application()
-        # app.router.add_get("/get", get_handler)
+        app.router.add_get("/get", get_handler)
         app.router.add_post("/get", post_handler)
 
         runner = aiohttp.web.AppRunner(app)
