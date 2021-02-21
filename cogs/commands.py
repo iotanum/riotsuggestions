@@ -134,6 +134,7 @@ class Commands(commands.Cog):
         with open(self.bot_registry_dir, 'w') as file:
             file.write(",".join(str(param) for param in registry_params))
 
+        # always call update after mutating
         await self.update_registry()
 
         return True
