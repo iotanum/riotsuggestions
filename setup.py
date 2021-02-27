@@ -9,7 +9,7 @@ setup(console=['scriptukas.py'],
               "bundle_files": 1,
               "compressed": True,
               "dll_excludes": ['msvcr71.dll'],
-              "excludes": ['pyreadline', 'difflib', 'doctest', 'locale',
-                           'optparse', 'pickle', 'calendar']
+              # "excludes": ['pyreadline', 'difflib', 'doctest', 'locale',
+              #              'optparse', 'pickle', 'calendar']
           }
       })
