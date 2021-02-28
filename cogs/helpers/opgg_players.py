@@ -176,6 +176,8 @@ class Opgg(commands.Cog):
                 if region in self.final_active_players:
                     break
 
+        return self.final_active_players
+
     async def get_players(self):
         for region in self.regions:
             total_players, total_pages, pages_to_move = await self.find_ladder_middle(region)
