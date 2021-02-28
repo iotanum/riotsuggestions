@@ -209,7 +209,7 @@ class Opgg(commands.Cog):
             mapped_region = mapped_values[region]
             hyperlink = f"[{mapped_region}](https://{region}{op_gg_url}{player})"
 
-            embed.add_field(name=player, value=hyperlink, inline=False)
+            embed.add_field(name=player, value=hyperlink)
             string += f"\n{hyperlink}     | {mapped_region}     | {player}"
 
         # embed.description = string
