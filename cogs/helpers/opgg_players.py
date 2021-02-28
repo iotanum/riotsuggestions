@@ -193,7 +193,7 @@ class Opgg(commands.Cog):
 
     @commands.command(name='seed')
     async def seed_players(self, ctx):
-        active_players = self.get_players()
+        active_players = await self.get_players()
 
         await ctx.send(f"```\n{active_players}\n```")
 
