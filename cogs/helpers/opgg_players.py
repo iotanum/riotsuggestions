@@ -208,7 +208,7 @@ class Opgg(commands.Cog):
             player = player.replace(" ", "+")
             hyperlink = f"[{region}](https://{region}{op_gg_url}{player})".ljust(5)
             mapped_region = mapped_values[region].ljust(4)
-            string += f"\n{hyperlink}|{mapped_region}|{player}"
+            string += f"\n{hyperlink}     |{mapped_region}     |{player}"
 
         embed.description = string
         await ctx.send(embed=embed)
