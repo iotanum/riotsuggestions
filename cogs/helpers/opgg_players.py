@@ -195,9 +195,13 @@ class Opgg(commands.Cog):
 
     @commands.command(name='seed')
     async def seed_players(self, ctx):
+        string = ""
+        op_gg_url = "op.gg/summoner/userName="
         active_players = await self.get_players()
+        for region, player in active_players:
+            string += f"\n[https://{region}]({region}{op_gg_url}{active_players})"
 
-        await ctx.send(f"```\n{active_players}\n```")
+        await ctx.send(f"```\n{string}\n```")
 
 
 def setup(bot):
