@@ -201,6 +201,7 @@ class Opgg(commands.Cog):
         op_gg_url = "op.gg/summoner/userName="
         active_players = await self.get_players()
         for region, player in active_players.items():
+            player = player.replace(" ", "+")
             string += f"\n[{region}](https://{region}{op_gg_url}{player})"
 
         embed.description = string
