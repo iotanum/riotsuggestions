@@ -13,7 +13,8 @@ bot = commands.Bot(command_prefix=os.getenv("COMMAND_PREFIX"))
 
 initial_extensions = ['cogs.command_error_handler',
                       'cogs.commands',
-                      'cogs.http_endpoints']
+                      'cogs.http_endpoints',
+                      'cogs.helpers.opgg_players']
 
 
 @bot.event
