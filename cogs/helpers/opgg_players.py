@@ -196,13 +196,17 @@ class Opgg(commands.Cog):
 
     @commands.command(name='seed')
     async def seed_players(self, ctx):
+        mapped_values = {"euw.": "EUW1", "eune.": "EUN1", "na.": "NA1", "br.": "BR1",
+                         "ru.": "RU", "jp.": "JP1", "www.": "KR", "tr.": "TR1", "oce.": "OC1",
+                         "las.": "LA2", "lan.": "LA1"}
+
         embed = discord.Embed()
         string = ""
         op_gg_url = "op.gg/summoner/userName="
         active_players = await self.get_players()
         for region, player in active_players.items():
             player = player.replace(" ", "+")
-            string += f"\n[{region}](https://{region}{op_gg_url}{player})"
+            string += f"\n[{region}](https://{region}{op_gg_url}{player}) | {mapped_values[region]} | {player}"
 
         embed.description = string
         await ctx.send(embed=embed)
