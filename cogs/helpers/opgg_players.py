@@ -206,11 +206,13 @@ class Opgg(commands.Cog):
         active_players = await self.get_players()
         for region, player in active_players.items():
             player = player.replace(" ", "+")
-            hyperlink = f"[{region}](https://{region}{op_gg_url}{player})"
             mapped_region = mapped_values[region]
+            hyperlink = f"[{mapped_region}](https://{region}{op_gg_url}{player})"
+
+            embed.add_field(name=player, value=hyperlink, inline=False)
             string += f"\n{hyperlink}     | {mapped_region}     | {player}"
 
-        embed.description = string
+        # embed.description = string
         await ctx.send(embed=embed)
 
 
