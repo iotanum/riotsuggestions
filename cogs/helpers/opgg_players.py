@@ -4,6 +4,7 @@ import asyncio
 
 from bs4 import BeautifulSoup as bs
 from discord.ext import commands
+import discord
 
 
 class Opgg(commands.Cog):
@@ -13,7 +14,7 @@ class Opgg(commands.Cog):
         self.op_gg_page_ladder_url = "op.gg/ranking/ladder/page="
         self.op_gg_profile_page = "op.gg/summoner/userName="
         self.start_page = 1
-        self.regions = ["jp.", "www.", ] # "euw.", "eune.", "na.", "br.", "ru."
+        self.regions = ["euw.", "eune.", "na.", "br.", "ru.", "jp.", "www."]
         self.rank_to_find = "Gold 2"
         self.rank_ladder = ["Bronze", "Iron", "Silver", "Gold", "Platinum",
                             "Diamond", "Master", "Grandmaster", "Challenger"]
@@ -195,13 +196,15 @@ class Opgg(commands.Cog):
 
     @commands.command(name='seed')
     async def seed_players(self, ctx):
+        embed = discord.Embed()
         string = ""
         op_gg_url = "op.gg/summoner/userName="
         active_players = await self.get_players()
         for region, player in active_players.items():
             string += f"\n[{region}](https://{region}{op_gg_url}{player})"
 
-        await ctx.send(f"```\n{string}\n```")
+        embed.description = string
+        await ctx.send(embed=embed)
 
 
 def setup(bot):
