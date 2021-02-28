@@ -14,7 +14,7 @@ class Opgg(commands.Cog):
         self.op_gg_page_ladder_url = "op.gg/ranking/ladder/page="
         self.op_gg_profile_page = "op.gg/summoner/userName="
         self.start_page = 1
-        self.regions = ["euw.", "eune.", "na.", "br.", "ru.", "jp.", "www."]
+        self.regions = ["euw.", "eune.", "na.", "br.", "ru.", "jp.", "www.", "tr.", "oce.", 'las.', 'lan.']
         self.rank_to_find = "Gold 2"
         self.rank_ladder = ["Bronze", "Iron", "Silver", "Gold", "Platinum",
                             "Diamond", "Master", "Grandmaster", "Challenger"]
