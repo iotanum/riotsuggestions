@@ -15,3 +15,4 @@ services:
         source: /data/bot_registry
         target: /data/bot_registry
     image: suggestionsbot
+    restart: always
