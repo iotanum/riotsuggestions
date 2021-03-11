@@ -12,7 +12,7 @@ import os
 class Commands(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.bot_registry_dir = '/data/bot_registry/registry'
+        self.bot_registry_dir = 'registry' if os.name == 'nt' else '/data/bot_registry/registry'
         self.registry = {}
 
     async def format_message_to_champ_list(self, message):
@@ -70,11 +70,12 @@ class Commands(commands.Cog):
             suggestion_1 = suggestion_response['matchups'][0]
             suggestion_2 = suggestion_response['matchups'][1]
             suggestion_3 = suggestion_response['matchups'][2]
+            pick_type = suggestion_response['type']
         except:
             pass
 
         embed = discord.Embed(title=f"What should you play in *{lane_for_suggestion}*, huh?",
-                              description=f"👏 Went 👏 through 👏 **{suggestion_response['totalRecords']}** 👏 matches 👏 {tag}",
+                              description=f"{tag} 👏 Went 👏 through 👏 **{suggestion_response['totalRecords']}** 👏 matches 👏",
                               color=0xd62424)
 
         if len(suggestion_response['matchups']) == 0:
@@ -99,8 +100,9 @@ class Commands(commands.Cog):
                             value=f"💯 **{suggestion_3['winrate']}%**\n"
                                   f"📈 *{suggestion_3['totalGames']}* games",
                             inline=True)
-        embed.set_footer(text="REMEMBER! Your team (left side) must be sorted!\n"
-                              "TOP, JUNGLE, MIDDLE, BOTTOM, UTILITY")
+        embed.set_footer(text=f"REMEMBER! Your team (left side) must be sorted!\n"
+                              f"TOP, JUNGLE, MIDDLE, BOTTOM, UTILITY\n"
+                              f"🍆💦 Suggestions are of '{pick_type}' type 💯")
 
         return embed
 

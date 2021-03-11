@@ -60,18 +60,17 @@ class Opgg(commands.Cog):
                 # Check division in accordance to rank ladder index
                 # if it's above - go some pages lower
 
-    async def check_if_no_table(self, region, page):
-        url = f"{self.url_prefix}{region if region else ''}{self.op_gg_page_ladder_url}{page}"
-        response = await self.request(url)
-
-        parser = bs(response, features='lxml')
-
-        error = parser.find('div', {"class": "ErrorMessage"})
-        if error:
-            print(error)
-            print("Nothing in page.")
-            return True
-        return False
+    # async def check_if_no_table(self, region, page):
+    #     url = f"{self.url_prefix}{region if region else ''}{self.op_gg_page_ladder_url}{page}"
+    #     response = await self.request(url)
+    #
+    #     parser = bs(response, features='lxml')
+    #
+    #     error = parser.find('div', {"class": "ErrorMessage"})
+    #     if error:
+    #         print("Nothing in page.")
+    #         return True
+    #     return False
 
     async def find_players_in_table(self, player):
         player_name = player.find('td', {'class': 'ranking-table__cell ranking-table__cell--summoner'})
@@ -85,22 +84,17 @@ class Opgg(commands.Cog):
         url = f"{self.url_prefix}{region if region else ''}{self.op_gg_page_ladder_url}{page_to_search_in}"
         response = await self.request(url)
 
-        if await self.check_if_no_table(region, page_to_search_in):
-            pages_to_move, nesveikas_skaicius = divmod(self.total_pages * 0.4, 1)
-            return [], -(pages_to_move)
-
         parser = bs(response, features='lxml')
 
         found_players = []
         players = parser.find_all('tr', {"class": 'ranking-table__row'})
-        print(239, url)
+        print(url)
         for idx, player in enumerate(players, 1):
             player_name, player_rank = await self.find_players_in_table(player)
 
             # Return True or False if page is correct
             correct_page = await self.check_player(player_rank, region, return_pages=False)
             if not correct_page:
-                print(21)
                 pages_to_shift = await self.check_player(player_rank, region, return_pages=True)
                 if return_if_suitable:
                     return [], pages_to_shift
@@ -151,7 +145,7 @@ class Opgg(commands.Cog):
                 print(f"Shifting pages {pages_to_change}.. Currently on {self.current_page} - "
                       f"'{region if region != 'www.' else 'kr.'}'")
 
-            await asyncio.sleep(0.5)
+            await asyncio.sleep(0.15)
 
     async def find_active_player_in_region(self):
         for region, players in self.player_dict.items():
@@ -205,11 +199,10 @@ class Opgg(commands.Cog):
         op_gg_url = "op.gg/summoner/userName="
         active_players = await self.get_players()
         for region, player in active_players.items():
-            player = player.replace(" ", "+")
-            mapped_region = mapped_values[region]
-            hyperlink = f"[{mapped_region}](https://{region}{op_gg_url}{player})"
 
-            embed.add_field(name=player, value=hyperlink)
+            mapped_region = mapped_values[region]
+            hyperlink = f"[{player}](https://{region}{op_gg_url}{player.replace(' ', '+')})"
+            embed.add_field(name=mapped_region, value=hyperlink)
             string += f"\n{hyperlink}     | {mapped_region}     | {player}"
 
         # embed.description = string
